@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import Prompt from './components/Prompt';
+import { Heading, Box, Flex } from 'rebass';
+import { ThemeProvider } from "theme-ui";
+import theme from "./theme";
+import Poem from './components/Poem';
+import { useState } from 'react';
+import { createText, createTitle } from './PoemGen';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const [text, setText] = useState("");
+    const [title, setTitle] = useState("");
+
+    const updatePrompt = (e) => {
+        const prompt = e.target.value;
+        createText(prompt, 0.5).then(text => setText(text));
+        createTitle(prompt, 0.5).then(title => setTitle(title));
+    }
+
+    return (
+        <ThemeProvider theme={theme}>
+            <Box height="100vh" bg={theme.colors.dark} color={theme.colors.text} >
+                <Flex flexDirection="column" alignItems="center">
+                    <header className="App-header">
+                        <Heading fontSize={[5, 6, 7]} marginTop={25}>
+                            Poet
+                        </Heading>
+                    </header>
+                    <Prompt updatePrompt={updatePrompt} />
+                    <Poem title={title} text={text} />
+                </Flex>
+            </Box>
+        </ThemeProvider>
+    );
 }
 
 export default App;
