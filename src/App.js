@@ -1,6 +1,5 @@
 import Prompt from './components/Prompt';
 import { Heading, Box, Flex, Text } from 'rebass';
-import { Slider } from '@rebass/forms';
 import { ThemeProvider } from "theme-ui";
 import theme from "./theme";
 import Poem from './components/Poem';
@@ -12,7 +11,6 @@ function App() {
     const [text, setText] = useState("");
     const [title, setTitle] = useState("");
     const [temperature, setTemperature] = useState(0.5);
-    const [image, setImage] = useState(null);
 
     const updatePrompt = (e) => {
         const prompt = e.target.value;

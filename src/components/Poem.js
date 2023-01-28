@@ -1,6 +1,4 @@
-import { useState } from "react";
 import { Box, Text } from "rebass";
-import theme from "../theme";
 
 export default function Poem({ title, text }) {
     return (
