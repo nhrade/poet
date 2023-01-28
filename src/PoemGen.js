@@ -1,4 +1,5 @@
 import { Configuration, OpenAIApi } from "openai";
+import { backOff } from "exponential-backoff";
 
 // setup configuration
 const configuration = new Configuration({
@@ -12,12 +13,12 @@ export async function createText(prompt, temperature) {
     // generate poem text
     let completion;
     try {
-        completion = await openai.createCompletion({
+        completion = await backOff(() => openai.createCompletion({
             model: "text-davinci-003",
             prompt: `Write a poem about ${prompt}`,
             temperature: temperature,
             max_tokens: 2048
-        });
+        }));
     }
     catch (error) {
         console.error(error);
@@ -29,11 +30,11 @@ export async function createTitle(prompt, temperature) {
     // generate poem title
     let completion;
     try {
-        completion = await openai.createCompletion({
+        completion = await backOff(() => openai.createCompletion({
             model: "text-davinci-003",
             prompt: `Write a title for a poem about ${prompt}`,
             temperature: temperature,
-        });
+        }));
     }
     catch (error) {
         console.error(error);
