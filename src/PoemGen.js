@@ -20,17 +20,23 @@ export async function createText(prompt, temperature) {
         });
     }
     catch (error) {
-
+        console.error(error);
     }
     return completion.data.choices[0].text;
 }
 
 export async function createTitle(prompt, temperature) {
     // generate poem title
-    const completion = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: `Write a title for a poem about ${prompt}`,
-        temperature: temperature,
-    });
+    let completion;
+    try {
+        completion = await openai.createCompletion({
+            model: "text-davinci-003",
+            prompt: `Write a title for a poem about ${prompt}`,
+            temperature: temperature,
+        });
+    }
+    catch (error) {
+        console.error(error);
+    }
     return completion.data.choices[0].text;
 }

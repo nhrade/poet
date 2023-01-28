@@ -1,5 +1,6 @@
 import Prompt from './components/Prompt';
-import { Heading, Box, Flex } from 'rebass';
+import { Heading, Box, Flex, Text } from 'rebass';
+import { Slider } from '@rebass/forms';
 import { ThemeProvider } from "theme-ui";
 import theme from "./theme";
 import Poem from './components/Poem';
@@ -10,11 +11,15 @@ function App() {
 
     const [text, setText] = useState("");
     const [title, setTitle] = useState("");
+    const [temperature, setTemperature] = useState(0.5);
+    const [image, setImage] = useState(null);
 
     const updatePrompt = (e) => {
         const prompt = e.target.value;
-        createText(prompt, 0.5).then(text => setText(text));
-        createTitle(prompt, 0.5).then(title => setTitle(title));
+        console.log(temperature);
+        setText("Loading...");
+        createText(prompt, temperature).then(text => setText(text));
+        createTitle(prompt, temperature).then(title => setTitle(title));
     }
 
     return (
@@ -23,11 +28,17 @@ function App() {
                 <Flex flexDirection="column" alignItems="center">
                     <header className="App-header">
                         <Heading fontSize={[5, 6, 7]} marginTop={25}>
-                            Poet
+                            Poet 📝
                         </Heading>
                     </header>
-                    <Prompt updatePrompt={updatePrompt} />
+                    <Prompt updatePrompt={updatePrompt} setTemperature={setTemperature} />
                     <Poem title={title} text={text} />
+                    <footer>
+                        <Text
+                            sx={{ position: "fixed", bottom: 10, right: "75vh" }}
+                            textAlign="center"
+                            fontSize={1}>Powered by OpenAI and React with Rebass</Text>
+                    </footer>
                 </Flex>
             </Box>
         </ThemeProvider>

@@ -4,10 +4,11 @@ import theme from "../theme";
 
 export default function Poem({ title, text }) {
     return (
-        <Box marginTop={100} width={1 / 2}>
+        <Box marginTop={50} width={1 / 2} align="center" scrolling={true}>
             <Text
                 fontSize={5}
                 fontFamily="Helvetica"
+                textAlign="center"
                 color="text">
                 {title}
             </Text>
@@ -15,6 +16,7 @@ export default function Poem({ title, text }) {
                 marginTop={30}
                 fontSize={[1, 2, 3]}
                 fontFamily="Helvetica"
+                lineHeight={2}
                 color="text">
                 {text}
             </Text>
